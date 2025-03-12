@@ -1,0 +1,109 @@
+@use "../abstracts/colors" as *;
+@use "../abstracts/typography" as *;
+
+.form-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1; 
+    width: 30%;
+  }
+  
+
+
+  .input-form {
+    background: rgba($flirt, 0.6);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+     box-shadow: 0 2px 8px rgba($licorice, 0.1);
+  
+    div {
+      margin-bottom: 15px;
+    }
+  
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: $white;
+      font: $font-primary;
+    }
+  
+    input[type="text"] {
+      width: 95%;
+      padding: 15px;
+      // Use a lightened version of $gray for the border
+      border: 1px solid lighten($indigo, 70%);
+      border-radius: 4px;
+      font-size: 14px;
+      color: $indigo ;
+      background: $white;
+    }
+  
+    p {
+      margin: 0 0 5px;
+      font-weight: bold;
+      color: $white;
+    }
+  
+    .custom-radio {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 15px; 
+      
+       
+        input[type="radio"] {
+          opacity: 0;
+          position: absolute;
+        }
+      
+    
+        span {
+          width: 16px;
+          height: 16px;
+          border: 2px solid $white;
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 5px;
+          position: relative;
+          transition: border-color 0.3s ease;
+        }
+        
+     
+        input[type="radio"]:checked + span {
+          border-color: $indigo;
+        }
+        
+        input[type="radio"]:checked + span::before {
+          content: "";
+          position: absolute;
+          top: 4px;
+          left: 4px;
+          width: 8px;
+          height: 8px;
+          border-radius: 80%;
+          background-color: $indigo;
+        }
+      }
+      
+    
+  
+    button[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background: $white;
+      border: none;
+      color: $indigo;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+  
+      &:hover {
+        background: $indigo;
+        color: $white;
+      }
+    }
+  }
