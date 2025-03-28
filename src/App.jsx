@@ -1,18 +1,18 @@
 import React from 'react';
-import Background from "./react/components/background.jsx";
-import InputForm from "./react/components/inputform.jsx";
-import './sass/main.scss';
-
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './react/pages/home';
+import View from './react/pages/view';
+import Calendar from './react/pages/calendar';
 
 function App() {
   return (
-    <div className="app-container">
-      <div className="form-container">
-        <InputForm />
-      </div>
-      <Background />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/view" element={<View />} />
+        <Route path="/Calendar" element={<Calendar />} />
+      </Routes>
+    </Router>
   );
 }
 
