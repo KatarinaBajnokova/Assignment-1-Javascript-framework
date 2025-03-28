@@ -238,4 +238,78 @@
       }
     }
   }
+  .list-task-card {
+    width: calc(80% - 5rem); 
+    margin: 0 1rem 1rem;     
+    padding: 1rem;
+    border: 1px solid $indigo;
+    border-radius: 5px;
+    background-color: rgba($white, 0.4); 
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 4px rgba($flirt, 0.3);
+  
+    .list-task-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: $licorice;
+    }
+  
+    .list-task-desc {
+      margin-bottom: 0.5rem;
+      color: $dark-purple;
+    }
+  
+    .list-task-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: $rich-black;
+    }
+  }
+  
+
+.filter-dropdown {
+  position: relative;
+  left: 13rem;
+
+  button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+
+  .dropdown-menu {
+    list-style: none;        
+    margin: 0;
+    padding: 0;
+    position: absolute;     
+    top: 2.5rem;            
+    left: 0;
+    background-color: #fff5fa; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+   
+
+    li {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-size: 0.95rem;
+
+      &:hover {
+        background-color: #f8d7e0; 
+      }
+    }
+  }
+}
+
 }

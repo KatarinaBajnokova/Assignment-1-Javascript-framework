@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import ViewBackground from "../components/viewbackground";
-import "../../sass/pages/_view.scss";
+import "../../sass/pages/_view.scss"; 
 
 function View() {
   const [tasks, setTasks] = useState([]);
   const [showCongrats, setShowCongrats] = useState(false);
   const [confirmDeleteIndex, setConfirmDeleteIndex] = useState(null);
   const [showProudMessage, setShowProudMessage] = useState(false);
+  const [allFilterType, setAllFilterType] = useState(null);
+  const [showFilterDropdown, setShowFilterDropdown] = useState(false);
 
   useEffect(() => {
     const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -49,12 +51,34 @@ function View() {
     setConfirmDeleteIndex(null);
   };
 
+
   const tasksWithIndex = tasks.map((task, index) => ({ ...task, index }));
+
+
   const doneTasks = tasksWithIndex.filter(task => task.status === 'done');
   const inprogressTasks = tasksWithIndex.filter(task => task.status === 'inprogress');
   const upcomingTasks = tasksWithIndex.filter(
     task => !task.status || (task.status !== 'done' && task.status !== 'inprogress')
   );
+
+
+  const sortTasksByFilter = (tasksArray, filter) => {
+    if (filter === 'date') {
+      return [...tasksArray].sort((a, b) => new Date(a.date) - new Date(b.date));
+    } else if (filter === 'priority') {
+    
+      return [...tasksArray].sort((a, b) => a.priority - b.priority);
+    } else if (filter === 'alphabet') {
+      return [...tasksArray].sort((a, b) => a.title.localeCompare(b.title));
+    }
+    return tasksArray;
+  };
+
+ 
+  const sortedAllTasks = useMemo(() => {
+    return sortTasksByFilter(tasksWithIndex, allFilterType);
+  }, [tasksWithIndex, allFilterType]);
+
 
   const renderTask = (task) => (
     <div key={task.index} className={`task-card ${task.status === 'done' ? 'done' : ''}`}>
@@ -96,10 +120,28 @@ function View() {
     </div>
   );
 
+  const renderListTask = (task) => (
+    <div key={task.index} className="list-task-card">
+      <div className="list-task-title">{task.title}</div>
+      <div className="list-task-desc">{task.description}</div>
+      <div className="list-task-info">
+        <span className="list-task-priority">Priority: {task.priority}</span>
+        <span className="list-task-date">
+          📅 {new Date(task.date).toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+          })}
+        </span>
+      </div>
+    </div>
+  );
+
   return (
     <div className="view-page">
       <ViewBackground />
       <h1>📋 Saved Tasks</h1>
+      {/* Three-column display */}
       <div className="columns" style={{ display: 'flex', gap: '1rem' }}>
         <div className="column upcoming" style={{ flex: 1 }}>
           <h2>Upcoming</h2>
@@ -132,10 +174,44 @@ function View() {
           </div>
         </div>
       </div>
+
+      <div className="all-tasks-section" style={{ marginTop: '2rem' }}>
+        <h2>All Tasks</h2>
+        <div className="filter-dropdown" style={{ marginBottom: '1rem', position: 'relative' }}>
+          <button onClick={() => setShowFilterDropdown(!showFilterDropdown)}>
+            Filter
+          </button>
+          {showFilterDropdown && (
+            <ul className="dropdown-menu">
+              <li onClick={() => { setAllFilterType('date'); setShowFilterDropdown(false); }}>
+                Sort by Date
+              </li>
+              <li onClick={() => { setAllFilterType('priority'); setShowFilterDropdown(false); }}>
+                Sort by Priority
+              </li>
+              <li onClick={() => { setAllFilterType('alphabet'); setShowFilterDropdown(false); }}>
+                Sort Alphabetically
+              </li>
+              <li onClick={() => { setAllFilterType(null); setShowFilterDropdown(false); }}>
+                Clear Filter
+              </li>
+            </ul>
+          )}
+        </div>
+        <div className="task-list">
+          {sortedAllTasks.length === 0 ? (
+            <p>No tasks available.</p>
+          ) : (
+            sortedAllTasks.map(renderListTask)
+          )}
+        </div>
+      </div>
+
       <div className="button-container">
         <Link to="/" className="view-button">Home</Link>
         <Link to="/calendar" className="calendar-button">Calendar</Link>
       </div>
+
       {showCongrats && (
         <div className="congrats-popup">
           <div className="congrats-box">
@@ -151,11 +227,13 @@ function View() {
         <div className="congrats-popup">
           <div className="congrats-box">
             Are you sure you want to give up?
-            <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+            <div className="confirmation-buttons">
               <button className="done-button" onClick={confirmDeleteYes}>
                 Yes
               </button>
-              <button className="undone-button" onClick={cancelDelete}>No</button>
+              <button className="undone-button" onClick={cancelDelete}>
+                No
+              </button>
             </div>
           </div>
         </div>
