@@ -1,12 +1,7 @@
-# React + Vite
+Hello,
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+I apologize for the current state of the file and folder organization. When I started this project, React and Sass were completely new to me, so I was already happy that I could make it work. Initially, I intended to create a well-structured project, but as I progressed, I started combining components. I was hesitant to separate them later because I was worried about potential incompatibilities and breaking existing connections.
 
-Currently, two official plugins are available:
+For example, I ended up styling the "view," "calendar," and "home" buttons separately on different pages—even though they share the same design—instead of creating a single reusable component. I understand now that this approach isn’t best practice.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+At this stage, I’m afraid to reorganize my files and separate the components correctly, as I worry that it might break my code. In my next assignment, I plan to focus on maintaining a cleaner separation of components, variables, and pages to enhance code reusability and overall organization. Thank you for your understanding.
